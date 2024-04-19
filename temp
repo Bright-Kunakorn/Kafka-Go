@@ -1,0 +1,24 @@
+using Elastic.Apm.Api;
+using Elastic.Apm.DiagnosticSource;
+
+public class CustomErrorFilter : IErrorFilter
+{
+    public bool ShouldIgnore(IError error)
+    {
+        if (error.Exception.Message.Contains("IgnoreThisError"))
+        {
+            return true;
+        }
+
+        return false;
+    }
+}
+
+
+var apmAgent = new ApmAgent(new AgentComponents(
+    new HttpDiagnosticsSubscriber(),
+    new EfCoreDiagnosticsSubscriber(),
+    new CustomErrorFilter()  // Add your custom error filter here
+));
+
+app.UseElasticApm(Configuration, apmAgent);
