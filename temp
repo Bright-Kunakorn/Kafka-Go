@@ -13,8 +13,6 @@ public class CustomErrorFilter : IErrorFilter
         return false;
     }
 }
-
-
 var apmAgent = new ApmAgent(new AgentComponents(
     new HttpDiagnosticsSubscriber(),
     new EfCoreDiagnosticsSubscriber(),
